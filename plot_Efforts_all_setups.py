@@ -61,8 +61,8 @@ for ax in axs.flat:
     ax.grid()
     ax.set(xlabel='time (s)', ylabel='Lift')
     ax.tick_params(labelright=True, labelleft=True, left=True, right=True)
-    
+
 fig.suptitle(f'Lift Efforts Plot')
 fig.tight_layout()
-plt.show()
 plt.savefig('COMPARE_EFFORTS_PLOT.png')
+plt.show()
