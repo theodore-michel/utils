@@ -13,7 +13,7 @@ env = int(sys.argv[2])
 rwd_path = sys.argv[3]
 
 ### Extract reward
-f = open(f'{rwd_path}\pbo_0', 'r')
+f = open(f'{rwd_path}', 'r')
 f1 = f.readlines()
 f.close()
 R = []
@@ -48,14 +48,15 @@ Up = [M[i] + St[i] for i in range(len(M))]
 Dw = [M[i] - St[i] for i in range(len(M))]
 
 
-plt.plot(G, M, color = 'darkblue', label = 'mean_reward')
-plt.plot(G, MR, color = 'orange', label = 'min_reward', linewidth = 2)
-plt.plot(G, Up, 'g:', color = 'blue')
-plt.plot(G, Dw, 'g:', color = 'blue')
-plt.fill_between(G, Up, Dw, color = 'blue', label = 'std_deviation', alpha = 0.2)
+plt.plot(G, M, color = 'darkblue', linewidth=1.3, label = 'mean')
+plt.plot(G, MR, color = 'orange', label = 'min', linewidth = 1, linestyle='-')
+# plt.plot(G, Up, 'g:', color = 'blue')
+# plt.plot(G, Dw, 'g:', color = 'blue')
+plt.fill_between(G, Up, Dw, color = 'blue', label = 'std_dev', alpha = 0.15)
 plt.legend(loc="lower right")
 plt.grid()
-plt.title('Reward : mean_lift')
+plt.title(f'{rwd_path}')
 plt.xlabel('Episode')
-plt.ylabel('REWARD')
-plt.savefig(f'{rwd_path}\plot_reward.png')
+plt.ylabel('Reward')
+plt.tick_params(labelright=True, labelleft=True, left=True, right=True)
+plt.savefig(f'{rwd_path}_PLOT.png')
