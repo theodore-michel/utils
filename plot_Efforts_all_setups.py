@@ -18,6 +18,15 @@ def retrieve_lifts(path):
     L = np.array(L)
     return(L)
 
+def retrieve_time(path):
+    T = [ ]
+    with open(os.getcwd() + '/' + path + 'Efforts0.txt', 'r') as f:
+        next(f) # Skip header
+        for line in f:
+            T.append(float(line.split()[1])) # select time column value
+    T = np.array(T)
+    return(T)
+
 ### FUNCTION
 def compute_mlift(L, window=[50,100], dt=0.1):
     # L is an array of shape (6,timesteps)
@@ -27,33 +36,52 @@ def compute_mlift(L, window=[50,100], dt=0.1):
 
 ### SUBPLOTS
 fig, axs = plt.subplots(3,2, figsize=(10,10))
-colors   = [1,2,3]
-cmap     = plt.cm.jet
-norm     = plc.Normalize(vmin=1, vmax=3)
+colors   = [1,2,3,4,5,6,7,8,9,10]
+cmap     = plt.cm.tab10
+norm     = plc.Normalize(vmin=1, vmax=10)
 color_it = 1
+start    = int(1/DT)
 
-for setups in ['setup0','setup1','setup2']:
-    Lifts = retrieve_lifts(setups+'/Resultats/')
-    TimeExtended = np.arange(1, WINDOW[1], DT)
+figm,axm = plt.subplots(1,1,figsize=(10,10))
 
-    axs[0, 0].plot(TimeExtended, Lifts[0][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+# for setups in ['0','25','50','80','799']:
+#     Lifts        = retrieve_lifts(PATH+setups+'/LiftSensor/')
+#     SimuTime     = retrieve_time(PATH+setups+'/LiftSensor/')
+#     Time         = SimuTime[int(WINDOW[0]//DT) : int(WINDOW[1]//DT) ] # np.arange(WINDOW[0], WINDOW[1], DT)
+#     TimeExtended = SimuTime[start:] # np.arange(1, WINDOW[1], DT)
+#     Mean         = compute_mlift(Lifts, WINDOW, DT)
+
+for setups in ['cfdRE100PR6','cfdRE100PR5']:
+    Lifts        = retrieve_lifts(setups+'/Resultats/')
+    SimuTime     = retrieve_time(setups+'/Resultats/')
+    Time         = SimuTime[int(WINDOW[0]//DT) : int(WINDOW[1]//DT) ] # np.arange(WINDOW[0], WINDOW[1], DT)
+    TimeExtended = SimuTime[start:] # np.arange(1, WINDOW[1], DT)
+    Mean         = compute_mlift(Lifts, WINDOW, DT)
+
+    axs[0, 0].plot(TimeExtended, Lifts[0][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[0, 0].set_title('Efforts0')
     axs[0, 0].legend()
-    axs[0, 1].plot(TimeExtended, Lifts[1][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+    axs[0, 1].plot(TimeExtended, Lifts[1][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[0, 1].set_title('Efforts1')
     axs[0, 1].legend()
-    axs[1, 0].plot(TimeExtended, Lifts[2][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+    axs[1, 0].plot(TimeExtended, Lifts[2][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[1, 0].set_title('Efforts2')
     axs[1, 0].legend()
-    axs[1, 1].plot(TimeExtended, Lifts[3][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+    axs[1, 1].plot(TimeExtended, Lifts[3][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[1, 1].set_title('Efforts3')
     axs[1, 1].legend()
-    axs[2, 0].plot(TimeExtended, Lifts[4][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+    axs[2, 0].plot(TimeExtended, Lifts[4][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[2, 0].set_title('Efforts4')
     axs[2, 0].legend()
-    axs[2, 1].plot(TimeExtended, Lifts[5][10:], color = cmap(norm(color_it)), label=setups, linewidth=0.7)
+    axs[2, 1].plot(TimeExtended, Lifts[5][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
     axs[2, 1].set_title('Efforts5')
     axs[2, 1].legend()
+
+    axm.plot(Time, Mean, linestyle='solid', color = cmap(norm(color_it)), label='env'+setups, linewidth=1)
+    axm.legend()
+    axm.grid()
+    axm.set(xlabel='time (s)', ylabel='mean lift')
+    axm.tick_params(labelright=True, labelleft=True, left=True, right=True)
 
     color_it+=1
 
@@ -64,5 +92,10 @@ for ax in axs.flat:
 
 fig.suptitle(f'Lift Efforts Plot')
 fig.tight_layout()
-plt.savefig('COMPARE_EFFORTS_PLOT.png')
+fig.savefig('COMPARE_EFFORTS_PLOT.png')
+
+figm.suptitle('Mean Lift over Time')
+figm.tight_layout()
+figm.savefig('MEAN_LIFT_PLOT_COMPARISON.png')
+
 plt.show()
