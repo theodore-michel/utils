@@ -50,34 +50,41 @@ figm,axm = plt.subplots(1,1,figsize=(10,10))
 #     Time         = SimuTime[int(WINDOW[0]//DT) : int(WINDOW[1]//DT) ] # np.arange(WINDOW[0], WINDOW[1], DT)
 #     TimeExtended = SimuTime[start:] # np.arange(1, WINDOW[1], DT)
 #     Mean         = compute_mlift(Lifts, WINDOW, DT)
+Lifts_min = 0
+Lifts_max = 0
+for setups in ['conf1','conf2','conf3']:
+    Lifts         = retrieve_lifts(setups+'/') # setups+'/Resultats/'
+    SimuTime      = retrieve_time(setups+'/')  # setups+'/Resultats/'
+    Mean          = compute_mlift(Lifts, WINDOW, DT)
+    start         = int(1/DT)
+    Mean          = compute_mlift(Lifts, WINDOW, DT)
+    Time          = SimuTime[int(WINDOW[0]//DT) : int(WINDOW[1]//DT) ] # np.arange(WINDOW[0], WINDOW[1], DT)
+    TimeExtended  = SimuTime[start:] # np.arange(1, WINDOW[1], DT)
+    Flat_Lifts    = [item for sublist in Lifts for item in sublist[start:]]
+    Lifts_min     = min(Lifts_min, min(Flat_Lifts))
+    Lifts_max     = max(Lifts_max, max(Flat_Lifts))
 
-for setups in ['cfdRE100PR6','cfdRE100PR5']:
-    Lifts        = retrieve_lifts(setups+'/Resultats/')
-    SimuTime     = retrieve_time(setups+'/Resultats/')
-    Time         = SimuTime[int(WINDOW[0]//DT) : int(WINDOW[1]//DT) ] # np.arange(WINDOW[0], WINDOW[1], DT)
-    TimeExtended = SimuTime[start:] # np.arange(1, WINDOW[1], DT)
-    Mean         = compute_mlift(Lifts, WINDOW, DT)
 
     axs[0, 0].plot(TimeExtended, Lifts[0][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[0, 0].set_title('Efforts0')
-    axs[0, 0].legend()
+    axs[0, 0].set_title('Panel 1')
+    axs[0, 0].legend(loc='upper right')
     axs[0, 1].plot(TimeExtended, Lifts[1][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[0, 1].set_title('Efforts1')
-    axs[0, 1].legend()
+    axs[0, 1].set_title('Panel 2')
+    axs[0, 1].legend(loc='upper right')
     axs[1, 0].plot(TimeExtended, Lifts[2][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[1, 0].set_title('Efforts2')
-    axs[1, 0].legend()
+    axs[1, 0].set_title('Panel 3')
+    axs[1, 0].legend(loc='upper right')
     axs[1, 1].plot(TimeExtended, Lifts[3][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[1, 1].set_title('Efforts3')
-    axs[1, 1].legend()
+    axs[1, 1].set_title('Panel 4')
+    axs[1, 1].legend(loc='upper right')
     axs[2, 0].plot(TimeExtended, Lifts[4][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[2, 0].set_title('Efforts4')
-    axs[2, 0].legend()
+    axs[2, 0].set_title('Panel 5')
+    axs[2, 0].legend(loc='upper right')
     axs[2, 1].plot(TimeExtended, Lifts[5][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
-    axs[2, 1].set_title('Efforts5')
-    axs[2, 1].legend()
+    axs[2, 1].set_title('Panel 6')
+    axs[2, 1].legend(loc='upper right')
 
-    axm.plot(Time, Mean, linestyle='solid', color = cmap(norm(color_it)), label='env'+setups, linewidth=1)
+    axm.plot(Time, Mean, linestyle='solid', color = cmap(norm(color_it)), label=setups, linewidth=1)
     axm.legend()
     axm.grid()
     axm.set(xlabel='time (s)', ylabel='mean lift')
@@ -87,7 +94,7 @@ for setups in ['cfdRE100PR6','cfdRE100PR5']:
 
 for ax in axs.flat:
     ax.grid()
-    ax.set(xlabel='time (s)', ylabel='Lift')
+    ax.set(xlabel='time (s)', ylabel='Lift', ylim=(Lifts_min,Lifts_max))
     ax.tick_params(labelright=True, labelleft=True, left=True, right=True)
 
 fig.suptitle(f'Lift Efforts Plot')
