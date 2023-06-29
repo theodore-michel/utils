@@ -35,14 +35,15 @@ def compute_mlift(L, window=[50,100], dt=0.1):
     return(Avg)
 
 ### SUBPLOTS
-fig, axs = plt.subplots(3,2, figsize=(10,10))
+fig, axs = plt.subplots(3,2, figsize=(10,8))
 colors   = [1,2,3,4,5,6,7,8,9,10]
+colors   =['darkblue', 'darkgreen', 'darkred']
 cmap     = plt.cm.tab10
 norm     = plc.Normalize(vmin=1, vmax=10)
-color_it = 1
+color_it = 0
 start    = int(1/DT)
 
-figm,axm = plt.subplots(1,1,figsize=(10,10))
+figm,axm = plt.subplots(1,1,figsize=(5,5))
 
 # for setups in ['0','25','50','80','799']:
 #     Lifts        = retrieve_lifts(PATH+setups+'/LiftSensor/')
@@ -65,26 +66,26 @@ for setups in ['conf1','conf2','conf3']:
     Lifts_max     = max(Lifts_max, max(Flat_Lifts))
 
 
-    axs[0, 0].plot(TimeExtended, Lifts[0][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[0, 0].plot(TimeExtended, Lifts[0][start:], color = colors[color_it], label=setups, linewidth=0.5)    # color = cmap(norm(color_it))
     axs[0, 0].set_title('Panel 1')
     axs[0, 0].legend(loc='upper right')
-    axs[0, 1].plot(TimeExtended, Lifts[1][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[0, 1].plot(TimeExtended, Lifts[1][start:], color = colors[color_it], label=setups, linewidth=0.5)
     axs[0, 1].set_title('Panel 2')
     axs[0, 1].legend(loc='upper right')
-    axs[1, 0].plot(TimeExtended, Lifts[2][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[1, 0].plot(TimeExtended, Lifts[2][start:], color = colors[color_it], label=setups, linewidth=0.5)
     axs[1, 0].set_title('Panel 3')
     axs[1, 0].legend(loc='upper right')
-    axs[1, 1].plot(TimeExtended, Lifts[3][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[1, 1].plot(TimeExtended, Lifts[3][start:], color = colors[color_it], label=setups, linewidth=0.5)
     axs[1, 1].set_title('Panel 4')
     axs[1, 1].legend(loc='upper right')
-    axs[2, 0].plot(TimeExtended, Lifts[4][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[2, 0].plot(TimeExtended, Lifts[4][start:], color = colors[color_it], label=setups, linewidth=0.5)
     axs[2, 0].set_title('Panel 5')
     axs[2, 0].legend(loc='upper right')
-    axs[2, 1].plot(TimeExtended, Lifts[5][start:], color = cmap(norm(color_it)), label=setups, linewidth=0.5)
+    axs[2, 1].plot(TimeExtended, Lifts[5][start:], color = colors[color_it], label=setups, linewidth=0.5)
     axs[2, 1].set_title('Panel 6')
     axs[2, 1].legend(loc='upper right')
 
-    axm.plot(Time, Mean, linestyle='solid', color = cmap(norm(color_it)), label=setups, linewidth=1)
+    axm.plot(Time, Mean, linestyle='solid', color = colors[color_it], label=setups, linewidth=1)            # color = cmap(norm(color_it))
     axm.legend()
     axm.grid()
     axm.set(xlabel='time (s)', ylabel='mean lift')
@@ -94,8 +95,10 @@ for setups in ['conf1','conf2','conf3']:
 
 for ax in axs.flat:
     ax.grid()
-    ax.set(xlabel='time (s)', ylabel='Lift', ylim=(Lifts_min,Lifts_max))
+    ax.set(xlabel='time (s)', ylabel='Lift', ylim=(min(Lifts_min,-1.05), max(Lifts_max,1.05)))
     ax.tick_params(labelright=True, labelleft=True, left=True, right=True)
+    ax.set_yticks([-1, -0.5, 0, 0.5, 1])
+    ax.label_outer()
 
 fig.suptitle(f'Lift Efforts Plot')
 fig.tight_layout()
