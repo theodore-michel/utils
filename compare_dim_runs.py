@@ -103,7 +103,7 @@ figd.savefig('DT_COMP_PLOT.png')
 ### WINDOW COMPARISON
 colors    = ['darkblue', 'darkgreen', 'darkred', 'darkorange', 'darkorchid','darksalmon','darkmagenta','darkcyan','darkgray','saddlebrown']
 color_it  = 0
-linestl   = ['solid','dotted','dashed']
+linestl   = ['solid','dashed','dotted']
 line_it   = 0
 figw,axw  = plt.subplots(1,1,figsize=(8,6))
 for conf in ['1','2','3']:
@@ -119,7 +119,7 @@ for conf in ['1','2','3']:
             else: F_of_T.append(compute_mlift(Lifts, window=[100,wndw], dt=0.05))
         F_of_T = np.array(F_of_T)
 
-        axw.plot(SimuTime[int(100/0.05):], F_of_T, linestyle=linestl[line_it], color = colors[color_it], label=f'conf {conf} window 100-{wndw}', linewidth=0.7)    
+        axw.plot(SimuTime[int(100/0.05):], F_of_T, linestyle=linestl[line_it], color = colors[color_it], label=f'conf {conf} window 100-{wndw}', linewidth=0.8)    
         
         line_it += 1
     color_it += 1
