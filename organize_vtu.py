@@ -4,6 +4,9 @@ import sys, os
 from tqdm import tqdm
 
 # Enter the path of the pbo results // ex : pbo_blm\results\panels_15-41-42\0
+if len(sys.argv) != 4:
+    print("Usage: python script.py path2envs episodes environments")
+    sys.exit(1)
 path     = sys.argv[1]
 res_path = path #.split('\\') [0]
 

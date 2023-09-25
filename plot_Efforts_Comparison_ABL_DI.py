@@ -3,6 +3,9 @@ import matplotlib.pyplot as plt
 import os, sys
 
 ### INPUTS
+if len(sys.argv) != 6:
+    print("Usage: python script.py path2abl path2dirty start end dt")
+    sys.exit(1)
 PATH_TO_EFFORTS     = str(sys.argv[1])
 PATH_TO_EFFORTS_BIS = str(sys.argv[2])
 WINDOW              = [ float(sys.argv[3]) , float(sys.argv[4]) ]

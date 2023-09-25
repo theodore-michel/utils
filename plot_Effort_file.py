@@ -3,16 +3,19 @@ import matplotlib.pyplot as plt
 import os, sys
 
 ### INPUTS
+if len(sys.argv) < 4:
+    print("Usage: python script.py filename start end movingavg=100")
+    sys.exit(1)
 NAME     = str(sys.argv[1])
 WINDOW   = [ float(sys.argv[2]) , float(sys.argv[3]) ]
-WINDOWMA = 100
+WINDOWMA = sys.argv[4] if len(sys.argv) >= 5 else 100
 
 INCR = []
 TIME = []
 CX   = []
 CY   = []
 
-with open(os.getcwd() + '/' + NAME + '.txt', 'r') as f:
+with open(os.getcwd() + '/' + NAME, 'r') as f:
     next(f) # Skip header
     for line in f:
         INCR.append(int(line.split()[0]))

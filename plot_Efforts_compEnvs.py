@@ -4,6 +4,9 @@ import matplotlib.colors as plc
 import os, sys
 
 ### INPUTS
+if len(sys.argv) != 5:
+    print("Usage: python script.py start end dt path2envs")
+    sys.exit(1)
 WINDOW          = [ float(sys.argv[1]) , float(sys.argv[2]) ]
 DT              = float(sys.argv[3])
 PATH            = sys.argv[4]

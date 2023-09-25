@@ -3,12 +3,15 @@ import matplotlib.pyplot as plt
 import numpy as np
 import sys
 
+
+
+if len(sys.argv) != 4:
+    print("Usage: python script.py episodes environments rewardfilepath")
+    sys.exit(1)
 # enter the number of episodes
 ep = int(sys.argv[1])
-
 # enter the number of environments per episode
 env = int(sys.argv[2])
-
 # enter the path of reward file // ex : pbo_blm100\results\panels_09-47-46
 rwd_path = sys.argv[3]
 

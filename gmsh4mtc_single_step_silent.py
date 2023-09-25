@@ -17,6 +17,9 @@ import sys, os
 import numpy as np
 import time
 
+if len(sys.argv) != 2:
+    print("Usage: python script.py file.msh")
+    sys.exit(1)
 fichier_entree = sys.argv[1]
 fichier_sortie = fichier_entree.rsplit('.msh', 1)[0] + '.t'
 

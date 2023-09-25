@@ -4,6 +4,9 @@ import numpy as np
 import sys
 
 # enter the reward file path:
+if len(sys.argv) != 2:
+    print("Usage: python script.py rewardfilepath")
+    sys.exit(1)
 REWARD = str(sys.argv[1])
 
 ### Extract reward

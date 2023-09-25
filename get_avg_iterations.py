@@ -1,7 +1,9 @@
 import re
 import sys 
 
-
+if len(sys.argv) != 2:
+    print("Usage: python script.py logpath")
+    sys.exit(1)
 FILE_PATH = sys.argv[1]     # log.txt file
 
 

@@ -3,10 +3,13 @@ import matplotlib.pyplot as plt
 import os, sys
 
 ### INPUTS
+if len(sys.argv) != 6:
+    print("Usage: python script.py path2efforts start end dt numofpanels")
+    sys.exit(1)
 PATH_TO_EFFORTS = str(sys.argv[1])
 WINDOW          = [ float(sys.argv[2]) , float(sys.argv[3]) ]
 DT              = float(sys.argv[4])
-NUM_OF_PANELS   = 8
+NUM_OF_PANELS   = sys.argv[5] # 6 or 8
 
 
 if NUM_OF_PANELS==8 :   # TSE
