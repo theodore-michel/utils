@@ -1,0 +1,77 @@
+{ Geometres=
+	{ Type= ModeleDeModeles }
+	{ Dependance=
+		{ Modele= Definition{{geo_name}} }
+		{ Modele= Geo{{geo_name}} }
+		{ Modele= Distance{{geo_name}} }
+	}
+}
+
+{ Parametres= 
+    { Type= ModeleConstant }
+    { Data=  
+		{ Champ= { Type= P1_Scalaire_Par }{ Nom= Appartient{{ls_name}} }{ Data= ValeurItem 1 0 }}
+		{ Champ= { Type= P1_Scalaire_Par }{ Nom= LevelSet{{ls_name}} }{ Data= ValeurItem 1 0 }}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+	}
+}
+
+{ Definition{{geo_name}}=
+    { Type= ModeleDeMouvements }
+    { Data=
+        { Repere=
+            { Dimension= {{Dimension}} } 
+            { Nom= {{geo_name}} }
+            { Origine= {{Origine}} } 
+            { Axes = {{Axes}} }  
+        }
+    }
+    { Dependance= 
+        { Maillage= MaillagePrincipal }
+    }
+}
+
+{ Geo{{geo_name}}=
+    { Type= ModeleDeGeometres }
+    { Data=
+		{ Geometre= 
+			{ Nom= {{geo_name}} }
+			{ Type= GeometreAnalytique }
+			{ Data=
+				{{Forme}} 
+				{ Repere= {{geo_name}} }
+			}
+		}
+    }
+    { Dependance=
+        { Maillage= MaillagePrincipal }
+        { Modele= Definition{{geo_name}} }
+    }
+}
+
+{ Distance{{geo_name}}=
+	{ Type= ModeleParticulaire }
+	{ Data=
+		{ ItemSolveur=
+			{ Type= ISGeometre }
+			{ NbChampSolution= 2 }
+			{ ChampSolution= Appartient{{ls_name}} LevelSet{{ls_name}} }
+			{ NbChampParametre= 2 }
+			{ ChampParametre= {{Coordonnees}} {{PrecisionFrontiere}} }
+			{ Geometre= {{geo_name}} }
+			{ Distance= 1 }
+			{ Appartient= 1 }
+		}
+	}
+	{ Dependance=
+		{ Maillage= MaillagePrincipal }
+		{ Champ= {{Coordonnees}} }
+		{ Champ= {{PrecisionFrontiere}} }
+	}
+	{ DependanceModifiable=
+		{ Champ= Appartient{{ls_name}} }
+		{ Champ= LevelSet{{ls_name}} }
+	}
+}

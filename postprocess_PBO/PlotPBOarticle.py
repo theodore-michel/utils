@@ -5,9 +5,6 @@ import numpy as np
 import sys
 
 # enter the reward file path:
-if len(sys.argv) != 2:
-    print("Usage: python script.py rewardname")
-    sys.exit(1)
 REWARD = str(sys.argv[1])
 
 ### Extract reward
@@ -52,24 +49,33 @@ for i in range(len(rewards_file)):
     MA6.append(   float(rewards_file[i].split() [14]) )
 
 colors    = ['lightgray', 'black', 'darkred'] # instant reward, moving avg reward, markers
-markersX  = [1.0, 15.0, 25.0, 43.375, 70.0, 98.875] 
-markersY  = [R[int(markersX[0]*8)], R[int(markersX[1]*8)], R[int(markersX[2]*8)], R[int(markersX[3]*8)], R[int(markersX[4]*8)], R[int(markersX[5]*8)]]
-markersA1 = [A1[int(markersX[0]*8)], A1[int(markersX[1]*8)], A1[int(markersX[2]*8)], A1[int(markersX[3]*8)], A1[int(markersX[4]*8)], A1[int(markersX[5]*8)]]
-markersA2 = [A2[int(markersX[0]*8)], A2[int(markersX[1]*8)], A2[int(markersX[2]*8)], A2[int(markersX[3]*8)], A2[int(markersX[4]*8)], A2[int(markersX[5]*8)]]
-markersA3 = [A3[int(markersX[0]*8)], A3[int(markersX[1]*8)], A3[int(markersX[2]*8)], A3[int(markersX[3]*8)], A3[int(markersX[4]*8)], A3[int(markersX[5]*8)]]
-markersA4 = [A4[int(markersX[0]*8)], A4[int(markersX[1]*8)], A4[int(markersX[2]*8)], A4[int(markersX[3]*8)], A4[int(markersX[4]*8)], A4[int(markersX[5]*8)]]
-markersA5 = [A5[int(markersX[0]*8)], A5[int(markersX[1]*8)], A5[int(markersX[2]*8)], A5[int(markersX[3]*8)], A5[int(markersX[4]*8)], A5[int(markersX[5]*8)]]
-markersA6 = [A6[int(markersX[0]*8)], A6[int(markersX[1]*8)], A6[int(markersX[2]*8)], A6[int(markersX[3]*8)], A6[int(markersX[4]*8)], A6[int(markersX[5]*8)]]
+# markersX  = [1.0, 15.0, 25.0, 43.375, 70.0, 98.875] 
+# markersY  = [R[int(markersX[0]*8)], R[int(markersX[1]*8)], R[int(markersX[2]*8)], R[int(markersX[3]*8)], R[int(markersX[4]*8)], R[int(markersX[5]*8)]]
+# markersA1 = [A1[int(markersX[0]*8)], A1[int(markersX[1]*8)], A1[int(markersX[2]*8)], A1[int(markersX[3]*8)], A1[int(markersX[4]*8)], A1[int(markersX[5]*8)]]
+# markersA2 = [A2[int(markersX[0]*8)], A2[int(markersX[1]*8)], A2[int(markersX[2]*8)], A2[int(markersX[3]*8)], A2[int(markersX[4]*8)], A2[int(markersX[5]*8)]]
+# markersA3 = [A3[int(markersX[0]*8)], A3[int(markersX[1]*8)], A3[int(markersX[2]*8)], A3[int(markersX[3]*8)], A3[int(markersX[4]*8)], A3[int(markersX[5]*8)]]
+# markersA4 = [A4[int(markersX[0]*8)], A4[int(markersX[1]*8)], A4[int(markersX[2]*8)], A4[int(markersX[3]*8)], A4[int(markersX[4]*8)], A4[int(markersX[5]*8)]]
+# markersA5 = [A5[int(markersX[0]*8)], A5[int(markersX[1]*8)], A5[int(markersX[2]*8)], A5[int(markersX[3]*8)], A5[int(markersX[4]*8)], A5[int(markersX[5]*8)]]
+# markersA6 = [A6[int(markersX[0]*8)], A6[int(markersX[1]*8)], A6[int(markersX[2]*8)], A6[int(markersX[3]*8)], A6[int(markersX[4]*8)], A6[int(markersX[5]*8)]]
+markersX  = [1.0, 15.0, 98.875] 
+markersY  = [R[int(markersX[0]*8)], R[int(markersX[1]*8)], R[int(markersX[2]*8)]]
+markersA1 = [A1[int(markersX[0]*8)], A1[int(markersX[1]*8)], A1[int(markersX[2]*8)]]
+markersA2 = [A2[int(markersX[0]*8)], A2[int(markersX[1]*8)], A2[int(markersX[2]*8)]]
+markersA3 = [A3[int(markersX[0]*8)], A3[int(markersX[1]*8)], A3[int(markersX[2]*8)]]
+markersA4 = [A4[int(markersX[0]*8)], A4[int(markersX[1]*8)], A4[int(markersX[2]*8)]]
+markersA5 = [A5[int(markersX[0]*8)], A5[int(markersX[1]*8)], A5[int(markersX[2]*8)]]
+markersA6 = [A6[int(markersX[0]*8)], A6[int(markersX[1]*8)], A6[int(markersX[2]*8)]]
 
 ############## REWARD CONVERGENCE #####################################
-fig, ax  = plt.subplots(figsize=(6,4))
+fig, ax  = plt.subplots(figsize=(8,6.4))
 #
 ax.plot(Eaxis,  R, color = colors[0], linewidth = 1, label = 'Instant',         linestyle='-')
 ax.plot(Eaxis, MR, color = colors[1], linewidth = 2, label = 'Moving Average',  linestyle='-')
-ax.scatter(markersX, markersY, s=30, facecolors='none', edgecolors=colors[2])
+ax.scatter(markersX, markersY, s=80, facecolors='none', edgecolors=colors[2],   zorder=2)
 #
 ax.legend(loc="lower right", fontsize="large")  # Set the font size to "small"
-ax.grid(True, linewidth=0.5, linestyle='--', color='gray')
+ax.grid(False)
+# ax.grid(True, linewidth=0.5, linestyle='--', color='gray')
 ax.set_title('Reward Convergence')
 ax.set_xlabel('Episode')
 ax.set_ylabel('Reward')
@@ -83,42 +89,43 @@ fig.savefig(f'{REWARD}_reward_article.png')
 
 
 ################ ACTIONS CONVERGENCE ###################################################
-figs, axs = plt.subplots(3,2, figsize=(8,8))
+figs, axs = plt.subplots(2,3, figsize=(7.2,4.8))
 # action 1
-axs[0, 0].plot(Eaxis, A1,  color = colors[0], linewidth=0.7)
+axs[0, 0].plot(Eaxis, A1,  color = colors[0], linewidth=0.5)
 axs[0, 0].plot(Eaxis, MA1, color = colors[1], linewidth=1)
-axs[0, 0].scatter(markersX, markersA1, s=30, facecolors='none', edgecolors=colors[2])
+axs[0, 0].scatter(markersX, markersA1, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
 axs[0, 0].set_title(r"$\theta_1$")
 # action 2
-axs[0, 1].plot(Eaxis, A2,  color = colors[0], linewidth=0.7)
+axs[0, 1].plot(Eaxis, A2,  color = colors[0], linewidth=0.5)
 axs[0, 1].plot(Eaxis, MA2, color = colors[1], linewidth=1)
-axs[0, 1].scatter(markersX, markersA2, s=30, facecolors='none', edgecolors=colors[2])
+axs[0, 1].scatter(markersX, markersA2, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
 axs[0, 1].set_title(r"$\theta_2$")
 # action 3
-axs[1, 0].plot(Eaxis, A3,  color = colors[0], linewidth=0.7)
-axs[1, 0].plot(Eaxis, MA3, color = colors[1], linewidth=1)
-axs[1, 0].scatter(markersX, markersA3, s=30, facecolors='none', edgecolors=colors[2])
-axs[1, 0].set_title(r"$\theta_3$")
+axs[0, 2].plot(Eaxis, A3,  color = colors[0], linewidth=0.5)
+axs[0, 2].plot(Eaxis, MA3, color = colors[1], linewidth=1)
+axs[0, 2].scatter(markersX, markersA3, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
+axs[0, 2].set_title(r"$\theta_3$")
 # action 4
-axs[1, 1].plot(Eaxis, A4,  color = colors[0], linewidth=0.7)
-axs[1, 1].plot(Eaxis, MA4, color = colors[1], linewidth=1)
-axs[1, 1].scatter(markersX, markersA4, s=30, facecolors='none', edgecolors=colors[2])
-axs[1, 1].set_title(r"$\theta_4$")
+axs[1, 0].plot(Eaxis, A4,  color = colors[0], linewidth=0.5)
+axs[1, 0].plot(Eaxis, MA4, color = colors[1], linewidth=1)
+axs[1, 0].scatter(markersX, markersA4, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
+axs[1, 0].set_title(r"$\theta_4$")
 # action 5
-axs[2, 0].plot(Eaxis, A5,  color = colors[0], linewidth=0.7)
-axs[2, 0].plot(Eaxis, MA5, color = colors[1], linewidth=1)
-axs[2, 0].scatter(markersX, markersA5, s=30, facecolors='none', edgecolors=colors[2])
-axs[2, 0].set_title(r"$\theta_5$")
+axs[1, 1].plot(Eaxis, A5,  color = colors[0], linewidth=0.5)
+axs[1, 1].plot(Eaxis, MA5, color = colors[1], linewidth=1)
+axs[1, 1].scatter(markersX, markersA5, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
+axs[1, 1].set_title(r"$\theta_5$")
 # action 6
-axs[2, 1].plot(Eaxis, A6,  color = colors[0], linewidth=0.7)
-axs[2, 1].plot(Eaxis, MA6, color = colors[1], linewidth=1)
-axs[2, 1].scatter(markersX, markersA6, s=30, facecolors='none', edgecolors=colors[2])
-axs[2, 1].set_title(r"$\theta_6$")
+axs[1, 2].plot(Eaxis, A6,  color = colors[0], linewidth=0.5)
+axs[1, 2].plot(Eaxis, MA6, color = colors[1], linewidth=1)
+axs[1, 2].scatter(markersX, markersA6, s=30, facecolors='none', edgecolors=colors[2], zorder=2)
+axs[1, 2].set_title(r"$\theta_6$")
 #
 
 for axss in axs.flat:
     # axss.legend(loc = 'lower right', framealpha=0.5, fontsize="large")
-    axss.grid(True, linewidth=0.5, linestyle='--', color='gray')
+    axss.grid(False)
+    # axss.grid(True, linewidth=0.5, linestyle='--', color='gray')
     axss.set(xlabel='Episodes', ylabel='Angles (°)', ylim=(-30.1,30.1))
     axss.set_xticks(np.arange(0, EPISODES+1, 10))
     axss.xaxis.set_major_locator(plt.MaxNLocator(integer=True))
